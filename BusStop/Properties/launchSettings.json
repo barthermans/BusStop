@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "BusStop": {
+      "commandName": "Project",
+      "commandLineArgs": "X:\\git\\busstop\\input.txt",
+      "environmentVariables": {
+        "DOTNET_Environment": "Development"
+      }
+    }
+  }
+}
