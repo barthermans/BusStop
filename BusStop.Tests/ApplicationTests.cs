@@ -9,7 +9,7 @@ namespace BusStop.Tests
         [SetUp]
         public void Setup()
         {
-            _application = new Application( null, null);
+            _application = new Application(null, null);
         }
 
 
@@ -70,11 +70,14 @@ Grotty 12:45 13:25";
                 "Posh 10:00 10:30",
                 "Posh 10:00 10:15",
                 "Posh 10:00 10:25",
-                "Posh 10:00 10:10"
+                "Posh 10:00 10:10",
+                "Posh 10:10 10:30",
+                "Posh 10:10 10:20"
             };
 
             var output = _application.Process(input);
-            var expectedOutput = @"Posh 10:00 10:10";
+            var expectedOutput = @"Posh 10:00 10:10
+Posh 10:10 10:20";
 
             Assert.That(output, Is.EqualTo(expectedOutput));
         }

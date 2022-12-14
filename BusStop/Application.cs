@@ -40,22 +40,23 @@ namespace BusStop
             var serviceRecords = serviceLines.Select(x => new ServiceRecord(x)).Where(x => x.IsValid).ToList();
             serviceRecords.Sort();
 
-            var result = new Dictionary<ServiceRecord.CompanyEnum, List<string>> {
-                { ServiceRecord.CompanyEnum.Posh, new() },
-                { ServiceRecord.CompanyEnum.Grotty, new() }};
-
-            for (var i = 0; i < serviceRecords.Count; i++)
+            var position = 1;
+            while (position < serviceRecords.Count)
             {
-                if (i == 0 || !serviceRecords[i].IsEqualOrWorseThan(serviceRecords[i - 1]))
+                if (serviceRecords[position].IsEqualOrWorseThan(serviceRecords[position - 1]))
                 {
-                    result[serviceRecords[i].Company].Add(serviceRecords[i].ToString());
+                    serviceRecords.RemoveAt(position);
+                }
+                else
+                {
+                    position++;
                 }
             }
 
             return (
-                string.Join(Environment.NewLine, result[ServiceRecord.CompanyEnum.Posh]) +
+                string.Join(Environment.NewLine, serviceRecords.Where(x => x.Company == ServiceRecord.CompanyEnum.Posh)) +
                 Environment.NewLine + Environment.NewLine +
-                string.Join(Environment.NewLine, result[ServiceRecord.CompanyEnum.Grotty])
+                string.Join(Environment.NewLine, serviceRecords.Where(x => x.Company == ServiceRecord.CompanyEnum.Grotty))
             ).Trim();
         }
     }
